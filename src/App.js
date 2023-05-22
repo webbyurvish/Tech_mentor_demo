@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Mentors from './components/mentor/Mentors';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { API_URL } from './config';
+
 
 function App() {
+
+  const [mentors, setMentors] = useState([])
+
+  useEffect(() => {
+    async function fetchMentors() {
+      const mentors = await axios.get(`${API_URL}/mentors/all`)
+      setMentors(mentors.data)
+    }
+
+    fetchMentors();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div><Mentors mentors={mentors} /></div>
   );
 }
 
